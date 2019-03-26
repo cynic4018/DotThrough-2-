@@ -27,7 +27,8 @@ class FieldWindow(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK_OLIVE)
 
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.character_sprite = ModelSprite('images/character.png', model=self.world.character)
+        self.character_sprite = ModelSprite('images/character.png',
+                                            model=self.world.character)
 
     def on_key_press(self, key, key_modifiers):
         self.world.on_key_press(key, key_modifiers)
@@ -38,6 +39,7 @@ class FieldWindow(arcade.Window):
     def on_draw(self):
         arcade.start_render()
         self.character_sprite.draw()
+
 
 def main():
     window = FieldWindow(SCREEN_WIDTH, SCREEN_HEIGHT)

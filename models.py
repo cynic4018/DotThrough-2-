@@ -12,6 +12,7 @@ DIR_OFFSETS = {DIR_STILL: (0, 0),
                DIR_DOWN: (0, -1),
                DIR_LEFT: (-1, 0)}
 
+
 class Character:
     def __init__(self, world, x, y):
         self.world = world
@@ -20,11 +21,21 @@ class Character:
         self.direction = DIR_STILL
 
     def move(self, direction):
+        if self.x >= self.world.width - 30:
+            self.x = self.world.width - 30
+        if self.y >= self.world.height - 30:
+            self.y = self.world.height - 30
+        if self.x <= 30:
+            self.x = 30
+        if self.y <= 30:
+            self.y = 30
+
         self.x += DIR_OFFSETS[direction][0] * 10
         self.y += DIR_OFFSETS[direction][1] * 10
 
     def update(self, delta):
         self.move(self.direction)
+
 
 class World:
     def __init__(self, width, height):
