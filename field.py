@@ -21,6 +21,7 @@ class ModelSprite(arcade.Sprite):
 
 
 class FieldWindow(arcade.Window):
+
     def __init__(self, width, height):
         super().__init__(width, height)
 
@@ -29,6 +30,8 @@ class FieldWindow(arcade.Window):
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.character_sprite = ModelSprite('images/character.png',
                                             model=self.world.character)
+        self.object_cannot_touch = ModelSprite('images/pillar.png',
+                                               model=self.world.stage_one_objects)
 
     def on_key_press(self, key, key_modifiers):
         self.world.on_key_press(key, key_modifiers)
@@ -38,7 +41,11 @@ class FieldWindow(arcade.Window):
 
     def on_draw(self):
         arcade.start_render()
+
+        self.object_cannot_touch.draw()
         self.character_sprite.draw()
+
+
 
 
 def main():
