@@ -1,4 +1,4 @@
-import arcade.key
+import arcade
 from random import randint
 
 DIR_STILL = 0
@@ -21,6 +21,7 @@ class Character:
         self.y = y
         self.direction = DIR_STILL
         self.hit = False
+        self.exit_hit = False
 
     def move(self, direction):
         if self.x >= self.world.width - 30:
@@ -35,22 +36,26 @@ class Character:
         self.x += DIR_OFFSETS[direction][0] * 10
         self.y += DIR_OFFSETS[direction][1] * 10
 
-    def is_hit(self, stage_one_objects):
-        if self.x == stage_one_objects.x - 40 or self.x == stage_one_objects.x + 40 or self.x == stage_one_objects.x:
-            if stage_one_objects.y - 40 <= self.y  <= stage_one_objects.y + 40:
+    def is_hit(self, objects):
+        if objects.x - 40 <= self.x <= objects.x + 40:
+            if objects.y - 50 <= self.y  <= objects.y + 50:
                 return True
 
 
     def update(self, delta):
         if self.hit == True:
-            self.x = 0
-            self.y = 0
+            sys.exit(0)
             output = "Game Over"
             arcade.draw_text(output,
                              500,
                              500,
                              arcade.color.WHITE_SMOKE, 50)
             self.hit = False
+
+        if self.exit_hit == True:
+            self.x = 40
+            self.y = self.world.height // 2
+
 
         self.move(self.direction)
 
@@ -73,6 +78,8 @@ class World:
 
         self.stage_one_objects = StageOneObjects(self,  width // 2, height // 2)
 
+        self.exit_gate = StageOneObjects(self,  width, height // 2)
+
     def on_key_press(self, key, key_modifiers):
         if key == arcade.key.UP:
             self.character.direction = DIR_UP
@@ -88,3 +95,7 @@ class World:
 
         if self.character.is_hit(self.stage_one_objects):
             self.character.hit = True
+        if self.character.is_hit(self.exit_gate):
+            self.character.exit_hit = True
+
+

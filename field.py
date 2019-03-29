@@ -1,7 +1,7 @@
 import arcade
 from models import Character, World
 
-SCREEN_WIDTH = 600
+SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 
@@ -30,8 +30,10 @@ class FieldWindow(arcade.Window):
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.character_sprite = ModelSprite('images/character.png',
                                             model=self.world.character)
-        self.object_cannot_touch = ModelSprite('images/pillar.png',
+        self.object_cannot_touch_sprite = ModelSprite('images/pillar.png',
                                                model=self.world.stage_one_objects)
+        self.exit_gate_sprite = ModelSprite('images/Exit_gate.png',
+                                            model=self.world.exit_gate)
 
     def on_key_press(self, key, key_modifiers):
         self.world.on_key_press(key, key_modifiers)
@@ -42,7 +44,8 @@ class FieldWindow(arcade.Window):
     def on_draw(self):
         arcade.start_render()
 
-        self.object_cannot_touch.draw()
+        self.object_cannot_touch_sprite.draw()
+        self.exit_gate_sprite.draw()
         self.character_sprite.draw()
 
 
