@@ -52,6 +52,17 @@ class FieldWindow(arcade.Window):
         self.exit_gate_sprite.draw()
         self.character_sprite.draw()
 
+        arcade.draw_text(self.world.character.status,
+                         self.world.width // 3.25,
+                         self.world.height // 1.25,
+                         arcade.color.RED_ORANGE,
+                         50)
+        arcade.draw_text(self.world.character.desc_status,
+                         self.world.width // 2.9,
+                         self.world.height // 1.35,
+                         arcade.color.WHITE_SMOKE,
+                         15)
+
 
 
 
