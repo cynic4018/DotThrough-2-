@@ -1,4 +1,5 @@
 import arcade
+import sys
 from random import randint
 
 DIR_STILL = 0
@@ -6,6 +7,7 @@ DIR_UP = 1
 DIR_RIGHT = 2
 DIR_DOWN = 3
 DIR_LEFT = 4
+MOVEMENT_SPEED = 8
 
 DIR_OFFSETS = {DIR_STILL: (0, 0),
                DIR_UP: (0, 1),
@@ -33,18 +35,20 @@ class Character:
         if self.y <= 30:
             self.y = 30
 
-        self.x += DIR_OFFSETS[direction][0] * 10
-        self.y += DIR_OFFSETS[direction][1] * 10
+        self.x += DIR_OFFSETS[direction][0] * MOVEMENT_SPEED
+        self.y += DIR_OFFSETS[direction][1] * MOVEMENT_SPEED
 
-    def is_hit(self, objects):
-        if objects.x - 40 <= self.x <= objects.x + 40:
-            if objects.y - 50 <= self.y  <= objects.y + 50:
+    def is_hit(self, objects, hit_x, hit_y):
+        if objects.x - hit_x <= self.x <= objects.x + hit_x:
+            if objects.y - hit_y <= self.y  <= objects.y + hit_y:
                 return True
 
 
+
     def update(self, delta):
+        self.move(self.direction)
+
         if self.hit == True:
-            sys.exit(0)
             output = "Game Over"
             arcade.draw_text(output,
                              500,
@@ -52,12 +56,12 @@ class Character:
                              arcade.color.WHITE_SMOKE, 50)
             self.hit = False
 
-        if self.exit_hit == True:
-            self.x = 40
+        elif self.exit_hit == True:
+            self.exit_hit == False
+            self.x = 50
             self.y = self.world.height // 2
 
 
-        self.move(self.direction)
 
 
 
@@ -90,12 +94,15 @@ class World:
         if key == arcade.key.RIGHT:
             self.character.direction = DIR_RIGHT
 
+    def on_key_release(self, key, key_modifiers):
+        self.character.direction = DIR_STILL
+
     def update(self, delta):
         self.character.update(delta)
 
-        if self.character.is_hit(self.stage_one_objects):
+        if self.character.is_hit(self.stage_one_objects, 40, 50):
             self.character.hit = True
-        if self.character.is_hit(self.exit_gate):
+        if self.character.is_hit(self.exit_gate, 30, 30):
             self.character.exit_hit = True
 
 
