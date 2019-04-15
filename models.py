@@ -38,8 +38,13 @@ class Character:
         if self.y <= 30:
             self.y = 30
 
-        self.x += DIR_OFFSETS[direction][0] * MOVEMENT_SPEED
-        self.y += DIR_OFFSETS[direction][1] * MOVEMENT_SPEED
+        if self.hit == True:
+            self.x += 0
+            self.y += 0
+        else:
+            self.x += DIR_OFFSETS[direction][0] * MOVEMENT_SPEED
+            self.y += DIR_OFFSETS[direction][1] * MOVEMENT_SPEED
+
 
     def is_hit(self, objects, hit_x, hit_y):
         if objects.x - hit_x <= self.x <= objects.x + hit_x:
