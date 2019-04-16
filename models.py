@@ -22,8 +22,10 @@ class Character:
         self.x = x
         self.y = y
         self.direction = DIR_STILL
+        self.stage_name = "STAGE 01"
         self.status = ""
         self.desc_status = ""
+        self.next_stage_status = False
         self.restart = False
         self.hit = False
         self.exit_hit = False
@@ -41,6 +43,10 @@ class Character:
         if self.hit == True:
             self.x += 0
             self.y += 0
+        elif self.exit_hit == True:
+            self.x += 0
+            self.y += 0
+
         else:
             self.x += DIR_OFFSETS[direction][0] * MOVEMENT_SPEED
             self.y += DIR_OFFSETS[direction][1] * MOVEMENT_SPEED
@@ -61,15 +67,21 @@ class Character:
             self.desc_status = ""
             self.hit = False
             self.restart = False
+        elif self.next_stage_status == True:
+            self.x = 30
+            self.y = self.world.height // 2
+            self.status = ""
+            self.desc_status = ""
+            self.exit_hit = False
+            self.next_stage_status = False
 
         if self.hit == True:
             self.status = "Game Over"
             self.desc_status = "Press -SPACEBAR- for restart!!"
 
         elif self.exit_hit == True:
-            self.x = 50
-            self.y = self.world.height // 2
-            self.exit_hit = False
+            self.status = "Stage Clear"
+            self.desc_status = "Press -ENTER- for restart!!"
 
 
 class StageOneObjects:
@@ -102,6 +114,9 @@ class World:
     def on_key_press(self, key, key_modifiers):
         if key == arcade.key.SPACE and self.character.hit == True:
             self.character.restart = True
+
+        if key == arcade.key.ENTER and self.character.exit_hit == True:
+            self.character.next_stage_status = True
 
         if key == arcade.key.UP:
             self.character.direction = DIR_UP

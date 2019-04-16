@@ -28,6 +28,9 @@ class FieldWindow(arcade.Window):
         arcade.set_background_color(arcade.color.BLACK_OLIVE)
 
         self.world = World(SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        self.color_status_text = arcade.color.RED_ORANGE
+
         self.character_sprite = ModelSprite('images/character.png',
                                             model=self.world.character)
         self.object_cannot_touch_sprite = ModelSprite('images/pillar.png',
@@ -52,14 +55,85 @@ class FieldWindow(arcade.Window):
         self.exit_gate_sprite.draw()
         self.character_sprite.draw()
 
+        #define the stage in map
+        arcade.draw_rectangle_filled(30,
+                                     SCREEN_HEIGHT-30,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(50,
+                                     SCREEN_HEIGHT - 30,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(70,
+                                     SCREEN_HEIGHT - 30,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(30,
+                                     SCREEN_HEIGHT - 50,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(50,
+                                     SCREEN_HEIGHT - 50,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(70,
+                                     SCREEN_HEIGHT - 50,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(30,
+                                     SCREEN_HEIGHT - 70,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(50,
+                                     SCREEN_HEIGHT - 70,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+        arcade.draw_rectangle_filled(70,
+                                     SCREEN_HEIGHT - 70,
+                                     15,
+                                     15,
+                                     arcade.color.ORANGE_RED)
+
+
+
+        arcade.draw_text(self.world.character.stage_name,
+                         10,
+                         SCREEN_HEIGHT-100,
+                         arcade.color.WHITE,
+                         15,
+                         bold=2)
+
+
+        if self.world.character.hit == True:
+            self.color_status_text = arcade.color.RED_ORANGE
+        elif self.world.character.exit_hit == True:
+            self.color_status_text = arcade.color.GREEN
+
         arcade.draw_text(self.world.character.status,
-                         self.world.width // 3.25,
-                         self.world.height // 1.25,
-                         arcade.color.RED_ORANGE,
+                         SCREEN_WIDTH // 3.25,
+                         SCREEN_HEIGHT // 1.25,
+                         self.color_status_text,
                          50)
+
         arcade.draw_text(self.world.character.desc_status,
-                         self.world.width // 2.9,
-                         self.world.height // 1.35,
+                         SCREEN_WIDTH // 2.9,
+                         SCREEN_HEIGHT // 1.35,
                          arcade.color.WHITE_SMOKE,
                          15)
 
