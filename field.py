@@ -19,7 +19,6 @@ class ModelSprite(arcade.Sprite):
         self.sync_with_model()
         super().draw()
 
-
 class FieldWindow(arcade.Window):
 
     def __init__(self, width, height):
@@ -31,10 +30,12 @@ class FieldWindow(arcade.Window):
 
         self.color_status_text = arcade.color.RED_ORANGE
 
+
         self.character_sprite = ModelSprite('images/character.png',
                                             model=self.world.character)
-        self.object_cannot_touch_sprite = ModelSprite('images/pillar.png',
-                                               model=self.world.stage_one_objects)
+
+        self.object_cant_touch_stage_sprite = self.world.object_list
+
         self.exit_gate_sprite = ModelSprite('images/Exit_gate.png',
                                             model=self.world.exit_gate)
 
@@ -51,11 +52,12 @@ class FieldWindow(arcade.Window):
     def on_draw(self):
         arcade.start_render()
 
-        self.object_cannot_touch_sprite.draw()
-        self.exit_gate_sprite.draw()
         self.character_sprite.draw()
+        for i in self.object_cant_touch_stage_sprite:
+            i.draw()
+        self.exit_gate_sprite.draw()
 
-        #define the stage in map
+        #define the stage location in map
         arcade.draw_rectangle_filled(30,
                                      SCREEN_HEIGHT-30,
                                      15,
