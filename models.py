@@ -34,14 +34,14 @@ class Character:
         self.exit_hit = False
 
     def move(self, direction):
-        if self.x >= self.world.width - 30:
-            self.x = self.world.width - 30
-        if self.y >= self.world.height - 30:
-            self.y = self.world.height - 30
-        if self.x <= 30:
-            self.x = 30
-        if self.y <= 30:
-            self.y = 30
+        if self.x >= self.world.width - 20:
+            self.x = self.world.width - 20
+        if self.y >= self.world.height - 20:
+            self.y = self.world.height - 20
+        if self.x <= 20:
+            self.x = 20
+        if self.y <= 20:
+            self.y = 20
 
         if self.hit == True:
             self.x += 0
@@ -58,7 +58,16 @@ class Character:
     def is_hit(self, objects, hit_x, hit_y):
         if objects.center_x - hit_x <= self.x <= objects.center_x + hit_x:
             if objects.center_y - hit_y <= self.y  <= objects.center_y + hit_y:
-                return True
+                if self.stage_count == 3 \
+                        and objects.center_x - hit_x <= 335 <= objects.center_x + hit_x \
+                        and objects.center_y - hit_y <= 560  <= objects.center_y + hit_y:
+                    return False
+                elif self.stage_count == 3 \
+                        and objects.center_x - hit_x <= 604 <= objects.center_x + hit_x \
+                        and objects.center_y - hit_y <= 560  <= objects.center_y + hit_y:
+                    return False
+                else:
+                    return True
 
     def is_exithit(self, objects, hit_x, hit_y):
         if objects.x - hit_x <= self.x <= objects.x + hit_x:
@@ -347,12 +356,12 @@ class Character:
 
         if self.hit == True:
             self.status = "Game Over"
-            self.desc_status = "Press -SPACEBAR- for restart!!"
+            self.desc_status = "Press -SPACEBAR- for restart"
 
         elif self.exit_hit == True:
             if self.stage_count < self.MAX_STAGE:
                 self.status = "Stage Clear"
-                self.desc_status = "Press -ENTER- for restart!!"
+                self.desc_status = "Press -ENTER- for go next !!"
             else:
                 self.status = "Game Clear"
                 self.desc_status = "Cogratulation!! you clear game"

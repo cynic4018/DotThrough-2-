@@ -149,19 +149,19 @@ class FieldWindow(arcade.Window):
             else:
                 self.color_status_text = arcade.color.ORANGE_PEEL
 
-
-
         arcade.draw_text(self.world.character.status,
                          SCREEN_WIDTH // 3.25,
                          SCREEN_HEIGHT // 1.25,
                          self.color_status_text,
-                         50)
+                         50,
+                         bold=2)
 
         arcade.draw_text(self.world.character.desc_status,
                          SCREEN_WIDTH // 2.9,
                          SCREEN_HEIGHT // 1.35,
-                         arcade.color.WHITE_SMOKE,
-                         15)
+                         self.color_status_text,
+                         15,
+                         bold=2)
 
 
 def main():
