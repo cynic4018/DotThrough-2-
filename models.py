@@ -2,6 +2,8 @@ import arcade
 import sys
 from random import randint
 
+
+
 DIR_STILL = 0
 DIR_UP = 1
 DIR_RIGHT = 2
@@ -17,6 +19,8 @@ DIR_OFFSETS = {DIR_STILL: (0, 0),
 
 
 class Character:
+    MAX_STAGE = 2
+
     def __init__(self, world, x, y):
         self.world = world
         self.x = x
@@ -74,14 +78,28 @@ class Character:
             self.hit = False
             self.restart = False
         elif self.next_stage_status == True:
-            self.x = 30
-            self.y = self.world.height // 2
-            self.status = ""
-            self.desc_status = ""
-            self.stage_count += 1
-            self.stage_name = "STAGE 0" + str(self.stage_count)
-            self.exit_hit = False
-            self.next_stage_status = False
+            if self.stage_count < self.MAX_STAGE:
+                self.x = 30
+                self.y = self.world.height // 2
+                self.status = ""
+                self.desc_status = ""
+                self.stage_count += 1
+                self.stage_name = "STAGE 0" + str(self.stage_count)
+                self.exit_hit = False
+                self.next_stage_status = False
+
+                # stage2 objects
+                if self.stage_count == 2:
+                    self.stage_objects1 = arcade.Sprite("images/pillar.png")
+                    self.stage_objects1.center_x = self.world.width // 1.5
+                    self.stage_objects1.center_y = self.world.height // 1.5
+
+                    self.stage_objects2 = arcade.Sprite("images/pillar.png")
+                    self.stage_objects2.center_x = self.world.width // 3
+                    self.stage_objects2.center_y = self.world.height // 3
+
+                    self.world.object_list.append(self.stage_objects1)
+                    self.world.object_list.append(self.stage_objects2)
 
 
         if self.hit == True:
@@ -89,8 +107,12 @@ class Character:
             self.desc_status = "Press -SPACEBAR- for restart!!"
 
         elif self.exit_hit == True:
-            self.status = "Stage Clear"
-            self.desc_status = "Press -ENTER- for restart!!"
+            if self.stage_count < self.MAX_STAGE:
+                self.status = "Stage Clear"
+                self.desc_status = "Press -ENTER- for restart!!"
+            else:
+                self.status = "Game Clear"
+                self.desc_status = "Cogratulation!! you clear game"
 
 
 class ExitObjects:
@@ -112,6 +134,7 @@ class World:
 
         self.object_list = arcade.SpriteList()
 
+        #stage1 objects
         self.stage_objects = arcade.Sprite("images/pillar.png")
         self.stage_objects.center_x = self.width // 2
         self.stage_objects.center_y = self.height // 2
@@ -122,17 +145,7 @@ class World:
     def update(self, delta):
         self.character.update(delta)
 
-        if self.character.stage_count == 2:
-            self.stage_objects1 = arcade.Sprite("images/pillar.png")
-            self.stage_objects1.center_x = self.width // 1.5
-            self.stage_objects1.center_y = self.height // 1.5
 
-            self.stage_objects2 = arcade.Sprite("images/pillar.png")
-            self.stage_objects2.center_x = self.width // 3
-            self.stage_objects2.center_y = self.height // 3
-
-            self.object_list.append(self.stage_objects1)
-            self.object_list.append(self.stage_objects2)
 
         for i in self.object_list:
             if self.character.is_hit(i, 40, 60):
@@ -142,6 +155,8 @@ class World:
             self.character.exit_hit = True
             for i in self.object_list:
                 self.object_list.remove(i)
+
+
 
     def on_key_press(self, key, key_modifiers):
         if key == arcade.key.SPACE and self.character.hit == True:
