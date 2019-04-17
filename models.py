@@ -2,13 +2,12 @@ import arcade
 import sys
 from random import randint
 
-
 DIR_STILL = 0
 DIR_UP = 1
 DIR_RIGHT = 2
 DIR_DOWN = 3
 DIR_LEFT = 4
-MOVEMENT_SPEED = 10
+MOVEMENT_SPEED = 8
 
 DIR_OFFSETS = {DIR_STILL: (0, 0),
                DIR_UP: (0, 1),
@@ -174,13 +173,36 @@ class Character:
                     self.stage2_objects21.center_y = 100
 
                     self.stage2_objects22 = arcade.Sprite("images/pillar.png")
-                    self.stage2_objects22.center_x = 524
+                    self.stage2_objects22.center_x = 564
                     self.stage2_objects22.center_y = 60
 
                     self.stage2_objects23 = arcade.Sprite("images/pillar.png")
                     self.stage2_objects23.center_x = 604
                     self.stage2_objects23.center_y = 20
 
+                    self.stage2_objects24 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects24.center_x = 604
+                    self.stage2_objects24.center_y = 560
+
+                    self.stage2_objects25 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects25.center_x = 644
+                    self.stage2_objects25.center_y = 520
+
+                    self.stage2_objects26 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects26.center_x = 684
+                    self.stage2_objects26.center_y = 480
+
+                    self.stage2_objects27 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects27.center_x = 724
+                    self.stage2_objects27.center_y = 440
+
+                    self.stage2_objects28 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects28.center_x = 724
+                    self.stage2_objects28.center_y = 360
+
+                    self.stage2_objects29 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects29.center_x = 684
+                    self.stage2_objects29.center_y = 320
 
                     self.world.object_list.append(self.stage2_objects1)
                     self.world.object_list.append(self.stage2_objects2)

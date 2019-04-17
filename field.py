@@ -64,65 +64,73 @@ class FieldWindow(arcade.Window):
                                      SCREEN_HEIGHT-30,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 1
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 1
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
                                      SCREEN_HEIGHT - 30,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 2
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 2
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
                                      SCREEN_HEIGHT - 30,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 3
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 3
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(30,
                                      SCREEN_HEIGHT - 50,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 4
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 4
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
                                      SCREEN_HEIGHT - 50,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 5
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 5
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
                                      SCREEN_HEIGHT - 50,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 6
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 6
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(30,
                                      SCREEN_HEIGHT - 70,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 7
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 7
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
                                      SCREEN_HEIGHT - 70,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 8
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 8
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
                                      SCREEN_HEIGHT - 70,
                                      15,
                                      15,
-                                     self.color_map_in_stage if self.world.character.stage_count == 9
+                                     self.color_map_in_stage
+                                     if self.world.character.stage_count == 9
                                      else self.color_map_not_in_stage)
-
 
 
         arcade.draw_text(self.world.character.stage_name,
@@ -154,8 +162,6 @@ class FieldWindow(arcade.Window):
                          SCREEN_HEIGHT // 1.35,
                          arcade.color.WHITE_SMOKE,
                          15)
-
-
 
 
 def main():
