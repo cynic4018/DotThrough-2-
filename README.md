@@ -7,9 +7,12 @@ This arcade-game is about to clear each stage to go to the next stage. In the st
 ![dot2ProsCon](https://user-images.githubusercontent.com/32285642/54703051-ab0ec800-4b6a-11e9-97ea-a2070ff4a5fd.PNG)
 
 ## *Interface -Prototype-*
-![dot2inf](https://user-images.githubusercontent.com/32285642/54703038-a6e2aa80-4b6a-11e9-98be-22305f3c1698.PNG)
-![dot2st1](https://user-images.githubusercontent.com/32285642/54703046-a8ac6e00-4b6a-11e9-9a89-28898fc8ab18.PNG)
-![dot2st2](https://user-images.githubusercontent.com/32285642/54703104-c11c8880-4b6a-11e9-861e-2a81297e2b06.PNG)
+![Capture](https://user-images.githubusercontent.com/32285642/56315116-1f945100-6181-11e9-91d3-8a55315f8cd3.PNG)
+
+## *Screenshots*
+![Capture3](https://user-images.githubusercontent.com/32285642/56315122-21f6ab00-6181-11e9-9d0e-5b39b3883ba3.PNG)
+![Capture4](https://user-images.githubusercontent.com/32285642/56315128-23c06e80-6181-11e9-84fd-4fcaa6249565.PNG)
+![Capture2](https://user-images.githubusercontent.com/32285642/56315136-26bb5f00-6181-11e9-9fa6-d5cad79f57af.PNG)
 
 ## *Developer*
 Katapon Sinpunyawong 6010545722
