@@ -30,7 +30,7 @@ class FieldWindow(arcade.Window):
 
         self.color_status_text = arcade.color.RED_ORANGE
 
-        self.color_map_in_stage = arcade.color.ORANGE_PEEL
+        self.color_map_in_stage = arcade.color.ORANGE_RED
         self.color_map_not_in_stage = arcade.color.LIGHT_GRAY
 
         self.character_sprite = ModelSprite('images/character.png',
@@ -127,8 +127,8 @@ class FieldWindow(arcade.Window):
 
         arcade.draw_text(self.world.character.stage_name,
                          10,
-                         SCREEN_HEIGHT-100,
-                         arcade.color.WHITE,
+                         SCREEN_HEIGHT-105,
+                         self.color_map_in_stage,
                          15,
                          bold=2)
 

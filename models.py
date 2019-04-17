@@ -3,7 +3,6 @@ import sys
 from random import randint
 
 
-
 DIR_STILL = 0
 DIR_UP = 1
 DIR_RIGHT = 2
@@ -90,16 +89,122 @@ class Character:
 
                 # stage2 objects
                 if self.stage_count == 2:
-                    self.stage_objects1 = arcade.Sprite("images/pillar.png")
-                    self.stage_objects1.center_x = self.world.width // 1.5
-                    self.stage_objects1.center_y = self.world.height // 1.5
+                    self.stage2_objects1 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects1.center_x = 265
+                    self.stage2_objects1.center_y = 40
 
-                    self.stage_objects2 = arcade.Sprite("images/pillar.png")
-                    self.stage_objects2.center_x = self.world.width // 3
-                    self.stage_objects2.center_y = self.world.height // 3
+                    self.stage2_objects2 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects2.center_x = 265
+                    self.stage2_objects2.center_y = 120
 
-                    self.world.object_list.append(self.stage_objects1)
-                    self.world.object_list.append(self.stage_objects2)
+                    self.stage2_objects3 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects3.center_x = 305
+                    self.stage2_objects3.center_y = 160
+
+                    self.stage2_objects4 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects4.center_x = 344
+                    self.stage2_objects4.center_y = 200
+
+                    self.stage2_objects5 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects5.center_x = 255
+                    self.stage2_objects5.center_y = 300
+
+                    self.stage2_objects6 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects6.center_x = 215
+                    self.stage2_objects6.center_y = 380
+
+                    self.stage2_objects7 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects7.center_x = 255
+                    self.stage2_objects7.center_y = 380
+
+                    self.stage2_objects8 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects8.center_x = 255
+                    self.stage2_objects8.center_y = 460
+
+                    self.stage2_objects9 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects9.center_x = 295
+                    self.stage2_objects9.center_y = 510
+
+                    self.stage2_objects10 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects10.center_x = 335
+                    self.stage2_objects10.center_y = 560
+
+                    self.stage2_objects11 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects11.center_x = 344
+                    self.stage2_objects11.center_y = 344
+
+                    self.stage2_objects12 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects12.center_x = 384
+                    self.stage2_objects12.center_y = 393
+
+                    self.stage2_objects13 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects13.center_x = 424
+                    self.stage2_objects13.center_y = 433
+
+                    self.stage2_objects14 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects14.center_x = 444
+                    self.stage2_objects14.center_y = 513
+
+                    self.stage2_objects15 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects15.center_x = 464
+                    self.stage2_objects15.center_y = 433
+
+                    self.stage2_objects16 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects16.center_x = 504
+                    self.stage2_objects16.center_y = 393
+
+                    self.stage2_objects17 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects17.center_x = 544
+                    self.stage2_objects17.center_y = 353
+
+                    self.stage2_objects18 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects18.center_x = 444
+                    self.stage2_objects18.center_y = 260
+
+                    self.stage2_objects19 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects19.center_x = 444
+                    self.stage2_objects19.center_y = 180
+
+                    self.stage2_objects20 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects20.center_x = 484
+                    self.stage2_objects20.center_y = 140
+
+                    self.stage2_objects21 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects21.center_x = 524
+                    self.stage2_objects21.center_y = 100
+
+                    self.stage2_objects22 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects22.center_x = 524
+                    self.stage2_objects22.center_y = 60
+
+                    self.stage2_objects23 = arcade.Sprite("images/pillar.png")
+                    self.stage2_objects23.center_x = 604
+                    self.stage2_objects23.center_y = 20
+
+
+                    self.world.object_list.append(self.stage2_objects1)
+                    self.world.object_list.append(self.stage2_objects2)
+                    self.world.object_list.append(self.stage2_objects3)
+                    self.world.object_list.append(self.stage2_objects4)
+                    self.world.object_list.append(self.stage2_objects5)
+                    self.world.object_list.append(self.stage2_objects6)
+                    self.world.object_list.append(self.stage2_objects7)
+                    self.world.object_list.append(self.stage2_objects8)
+                    self.world.object_list.append(self.stage2_objects9)
+                    self.world.object_list.append(self.stage2_objects10)
+                    self.world.object_list.append(self.stage2_objects11)
+                    self.world.object_list.append(self.stage2_objects12)
+                    self.world.object_list.append(self.stage2_objects13)
+                    self.world.object_list.append(self.stage2_objects14)
+                    self.world.object_list.append(self.stage2_objects15)
+                    self.world.object_list.append(self.stage2_objects16)
+                    self.world.object_list.append(self.stage2_objects17)
+                    self.world.object_list.append(self.stage2_objects18)
+                    self.world.object_list.append(self.stage2_objects19)
+                    self.world.object_list.append(self.stage2_objects20)
+                    self.world.object_list.append(self.stage2_objects21)
+                    self.world.object_list.append(self.stage2_objects22)
+                    self.world.object_list.append(self.stage2_objects23)
 
 
         if self.hit == True:
@@ -144,8 +249,6 @@ class World:
 
     def update(self, delta):
         self.character.update(delta)
-
-
 
         for i in self.object_list:
             if self.character.is_hit(i, 40, 60):
