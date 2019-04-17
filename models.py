@@ -74,6 +74,7 @@ class Character:
             if objects.y - hit_y <= self.y  <= objects.y + hit_y:
                 return True
 
+
     def update(self, delta):
         self.move(self.direction)
 
