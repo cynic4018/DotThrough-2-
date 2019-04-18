@@ -55,13 +55,14 @@ class FieldWindow(arcade.Window):
         arcade.start_render()
 
         self.character_sprite.draw()
-        for i in self.object_cant_touch_stage_sprite:
-            i.draw()
+        # for i in self.object_cant_touch_stage_sprite:
+        #     i.draw()
+        self.object_cant_touch_stage_sprite.draw()
         self.exit_gate_sprite.draw()
 
         #define the stage location in map
         arcade.draw_rectangle_filled(30,
-                                     SCREEN_HEIGHT-30,
+                                     SCREEN_HEIGHT - 30,
                                      15,
                                      15,
                                      self.color_map_in_stage
