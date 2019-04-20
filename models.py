@@ -16,7 +16,7 @@ DIR_OFFSETS = {DIR_STILL: (0, 0),
                DIR_LEFT: (-1, 0)}
 
 
-class Character:
+class StageObject:
     MAX_STAGE = 3
     LOCATION1 = [[400, 300]]
     LOCATION2 = [[264, 40], [264, 120], [264, 200], [264, 344], [264, 344], [264, 424],
@@ -33,15 +33,70 @@ class Character:
         self.world = world
         self.x = x
         self.y = y
-        self.direction = DIR_STILL
+
         self.stage_name = "STAGE 01"
         self.status = ""
         self.desc_status = ""
         self.stage_count = 1
         self.next_stage_status = False
-        self.restart = False
+
+    def make_objects(self, LOCATION):
+        for i in LOCATION:
+            self.stage = arcade.Sprite("images/pillar.png")
+            self.stage.center_x = i[0]
+            self.stage.center_y = i[1]
+
+            self.world.object_list.append(self.stage)
+
+    def update(self, delta):
+
+        if self.world.character.restart == True:
+            self.world.character.x = 30
+            self.world.character.y = self.world.height // 2
+            self.status = ""
+            self.desc_status = ""
+            self.world.character.hit = False
+            self.world.character.restart = False
+        elif self.next_stage_status == True:
+            if self.stage_count < self.MAX_STAGE:
+                self.world.character.x = 30
+                self.world.character.y = self.world.height // 2
+                self.status = ""
+                self.desc_status = ""
+                self.stage_count += 1
+                self.stage_name = "STAGE 0" + str(self.stage_count)
+                self.world.character.exit_hit = False
+                self.next_stage_status = False
+
+
+                # stage2 objects
+                if self.stage_count == 2:
+                    self.make_objects(self.LOCATION2)
+
+                # stage3 objects
+                if self.stage_count == 3:
+                    self.make_objects(self.LOCATION3)
+
+class ExitObjects:
+
+    def __init__(self, world, x, y):
+        self.world = world
+        self.x = x
+        self.y = y
+
+
+class Character:
+    def __init__(self, world, x, y):
+        self.world = world
+        self.x = x
+        self.y = y
+        self.direction = DIR_STILL
+
         self.hit = False
         self.exit_hit = False
+        self.restart = False
+        self.animation = 1
+
 
     def move(self, direction):
         if self.x >= self.world.width - 20:
@@ -68,11 +123,11 @@ class Character:
     def is_hit(self, objects, hit_x, hit_y):
         if objects.center_x - hit_x <= self.x <= objects.center_x + hit_x:
             if objects.center_y - hit_y <= self.y  <= objects.center_y + hit_y:
-                if self.stage_count == 3 \
+                if self.world.stage_objects.stage_count == 3 \
                         and objects.center_x - hit_x <= 335 <= objects.center_x + hit_x \
                         and objects.center_y - hit_y <= 600  <= objects.center_y + hit_y:
                     return False
-                elif self.stage_count == 3 \
+                elif self.world.stage_objects.stage_count == 3 \
                         and objects.center_x - hit_x <= 604 <= objects.center_x + hit_x \
                         and objects.center_y - hit_y <= 600 <= objects.center_y + hit_y:
                     return False
@@ -84,65 +139,20 @@ class Character:
             if objects.y - hit_y <= self.y  <= objects.y + hit_y:
                     return True
 
-    def make_objects(self, LOCATION):
-        for i in LOCATION:
-            self.stage = arcade.Sprite("images/pillar.png")
-            self.stage.center_x = i[0]
-            self.stage.center_y = i[1]
-
-            self.world.object_list.append(self.stage)
-
     def update(self, delta):
         self.move(self.direction)
 
-        if self.restart == True:
-            self.x = 30
-            self.y = self.world.height // 2
-            self.status = ""
-            self.desc_status = ""
-            self.hit = False
-            self.restart = False
-        elif self.next_stage_status == True:
-            if self.stage_count < self.MAX_STAGE:
-                self.x = 30
-                self.y = self.world.height // 2
-                self.status = ""
-                self.desc_status = ""
-                self.stage_count += 1
-                self.stage_name = "STAGE 0" + str(self.stage_count)
-                self.exit_hit = False
-                self.next_stage_status = False
-
-
-                # stage2 objects
-                if self.stage_count == 2:
-                    self.make_objects(self.LOCATION2)
-
-                # stage3 objects
-                if self.stage_count == 3:
-                    self.make_objects(self.LOCATION3)
-
-
         if self.hit == True:
-            self.status = "Game Over"
-            self.desc_status = "Press -SPACEBAR- for restart"
+            self.world.stage_objects.status = "Game Over"
+            self.world.stage_objects.desc_status = "Press -SPACEBAR- for restart"
 
         elif self.exit_hit == True:
-            if self.stage_count < self.MAX_STAGE:
-                self.status = "Stage Clear"
-                self.desc_status = "Press -ENTER- for go next !!"
+            if self.world.stage_objects.stage_count < self.world.stage_objects.MAX_STAGE:
+                self.world.stage_objects.status = "Stage Clear"
+                self.world.stage_objects.desc_status = "Press -ENTER- for go next !!"
             else:
-                self.status = "Game Clear"
-                self.desc_status = "Cogratulation!! you clear game"
-
-
-class ExitObjects:
-
-    def __init__(self, world, x, y):
-        self.world = world
-        self.x = x
-        self.y = y
-
+                self.world.stage_objects.status = "Game Clear"
+                self.world.stage_objects.desc_status = "Cogratulation!! you clear game"
 
 
 class World:
@@ -155,14 +165,18 @@ class World:
 
         self.object_list = arcade.SpriteList()
 
+        self.stage_objects = StageObject(self, width // 2, height // 2)
+
         self.exit_gate = ExitObjects(self, width-10, height // 2)
 
         # stage1 objects
-        if self.character.stage_count == 1:
-            self.character.make_objects(self.character.LOCATION1)
+        if self.stage_objects.stage_count == 1:
+            self.stage_objects.make_objects(self.stage_objects.LOCATION1)
 
     def update(self, delta):
+        self.stage_objects.update(delta)
         self.character.update(delta)
+
 
         for i in self.object_list:
             if self.character.is_hit(i, 40, 60):
@@ -179,16 +193,22 @@ class World:
             self.character.restart = True
 
         if key == arcade.key.ENTER and self.character.exit_hit == True:
-            self.character.next_stage_status = True
+            self.stage_objects.next_stage_status = True
 
+        if self.character.animation == 4:
+            self.character.animation = 1
         if key == arcade.key.UP:
             self.character.direction = DIR_UP
+            self.character.animation += 1
         if key == arcade.key.DOWN:
             self.character.direction = DIR_DOWN
+            self.character.animation += 1
         if key == arcade.key.LEFT:
             self.character.direction = DIR_LEFT
+            self.character.animation += 1
         if key == arcade.key.RIGHT:
             self.character.direction = DIR_RIGHT
+            self.character.animation += 1
 
 
     def on_key_release(self, key, key_modifiers):

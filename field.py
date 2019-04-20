@@ -33,9 +33,6 @@ class FieldWindow(arcade.Window):
         self.color_map_in_stage = arcade.color.ORANGE_RED
         self.color_map_not_in_stage = arcade.color.LIGHT_GRAY
 
-        self.character_sprite = ModelSprite('images/character.png',
-                                            model=self.world.character)
-
         self.object_cant_touch_stage_sprite = self.world.object_list
 
         self.exit_gate_sprite = ModelSprite('images/Exit_gate.png',
@@ -50,13 +47,21 @@ class FieldWindow(arcade.Window):
     def update(self, delta):
         self.world.update(delta)
 
+        self.character_sprite = ModelSprite('images/character.png'
+                                            if self.world.character.animation == 1
+                                            else 'images/character2.png'
+                                            if self.world.character.animation == 2
+                                            else 'images/character3.png'
+                                            if self.world.character.animation == 3
+                                            else 'images/character4.png'
+                                            ,
+                                            model=self.world.character)
+
 
     def on_draw(self):
         arcade.start_render()
 
         self.character_sprite.draw()
-        # for i in self.object_cant_touch_stage_sprite:
-        #     i.draw()
         self.object_cant_touch_stage_sprite.draw()
         self.exit_gate_sprite.draw()
 
@@ -66,7 +71,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 1
+                                     if self.world.stage_objects.stage_count == 1
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
@@ -74,7 +79,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 2
+                                     if self.world.stage_objects.stage_count == 2
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
@@ -82,7 +87,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 3
+                                     if self.world.stage_objects.stage_count == 3
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(30,
@@ -90,7 +95,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 4
+                                     if self.world.stage_objects.stage_count == 4
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
@@ -98,7 +103,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 5
+                                     if self.world.stage_objects.stage_count == 5
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
@@ -106,7 +111,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 6
+                                     if self.world.stage_objects.stage_count == 6
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(30,
@@ -114,7 +119,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 7
+                                     if self.world.stage_objects.stage_count == 7
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(50,
@@ -122,7 +127,7 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 8
+                                     if self.world.stage_objects.stage_count == 8
                                      else self.color_map_not_in_stage)
 
         arcade.draw_rectangle_filled(70,
@@ -130,11 +135,11 @@ class FieldWindow(arcade.Window):
                                      15,
                                      15,
                                      self.color_map_in_stage
-                                     if self.world.character.stage_count == 9
+                                     if self.world.stage_objects.stage_count == 9
                                      else self.color_map_not_in_stage)
 
 
-        arcade.draw_text(self.world.character.stage_name,
+        arcade.draw_text(self.world.stage_objects.stage_name,
                          10,
                          SCREEN_HEIGHT-105,
                          self.color_map_in_stage,
@@ -145,19 +150,19 @@ class FieldWindow(arcade.Window):
         if self.world.character.hit == True:
             self.color_status_text = arcade.color.RED_ORANGE
         elif self.world.character.exit_hit == True:
-            if self.world.character.stage_count < self.world.character.MAX_STAGE:
+            if self.world.stage_objects.stage_count < self.world.stage_objects.MAX_STAGE:
                 self.color_status_text = arcade.color.GREEN
             else:
                 self.color_status_text = arcade.color.ORANGE_PEEL
 
-        arcade.draw_text(self.world.character.status,
+        arcade.draw_text(self.world.stage_objects.status,
                          SCREEN_WIDTH // 3.25,
                          SCREEN_HEIGHT // 1.25,
                          self.color_status_text,
                          50,
                          bold=2)
 
-        arcade.draw_text(self.world.character.desc_status,
+        arcade.draw_text(self.world.stage_objects.desc_status,
                          SCREEN_WIDTH // 2.9,
                          SCREEN_HEIGHT // 1.35,
                          self.color_status_text,
