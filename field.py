@@ -53,8 +53,7 @@ class FieldWindow(arcade.Window):
                                             if self.world.character.animation == 2
                                             else 'images/character3.png'
                                             if self.world.character.animation == 3
-                                            else 'images/character4.png'
-                                            ,
+                                            else 'images/character4.png',
                                             model=self.world.character)
 
 
@@ -168,6 +167,14 @@ class FieldWindow(arcade.Window):
                          self.color_status_text,
                          15,
                          bold=2)
+
+        arcade.draw_text(self.world.stage_objects.tutorial_text,
+                         SCREEN_WIDTH // 2,
+                         SCREEN_HEIGHT // 2,
+                         arcade.color.GREEN,
+                         30,
+                         bold=4)
+
 
 
 def main():
