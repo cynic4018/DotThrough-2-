@@ -21,10 +21,10 @@ class StageObject:
     LOCATION1 = [[400, 300]]
     LOCATION2 = [[304, 40], [304, 120], [304, 200], [304, 280], [409, 320], [409, 400],
                  [409, 480], [409, 560]]
-    LOCATION3 = [[264, 40], [264, 120], [264, 200], [264, 344], [264, 344], [264, 424],
-                 [264, 504], [264, 584], [420, 0], [420, 80], [420, 160], [420, 320],
-                 [420, 400], [420, 480], [420, 560], [578, 40], [578, 120], [578, 275],
-                 [578, 355], [578, 435], [578, 515], [578, 595]]
+    LOCATION3 = [[264, 40], [264, 120], [264, 200], [264, 344], [264, 424], [264, 504],
+                 [264, 584], [420, 0], [420, 80], [420, 160], [420, 320], [420, 400],
+                 [420, 480], [420, 560], [578, 40], [578, 120], [578, 275], [578, 355],
+                 [578, 435], [578, 515], [578, 595]]
     LOCATION4 = [[335, 40], [375, 120], [414, 200], [325, 263], [365, 343], [405, 423],
                  [444, 503], [484, 583]]
     LOCATION5 = [[265, 40], [265, 120], [305, 160], [344, 200], [255, 300], [215, 380],
@@ -36,6 +36,16 @@ class StageObject:
                  [360, 130], [360, 260], [360, 391], [360, 525], [452, 50], [452, 180],
                  [452, 310], [452, 441], [452, 574], [538, 0], [538, 130], [538, 260],
                  [538, 392], [538, 525]]
+    LOCATION7 = [[265, 300], [360, 261], [452, 179], [538, 130]]
+
+
+    STAR_LOCATION1 = [[400, 100], [200, 300], [600, 300]]
+    STAR_LOCATION2 = [[304, 360], [409, 240], [600, 300]]
+    STAR_LOCATION3 = [[264, 272], [420, 240], [578, 197]]
+    STAR_LOCATION4 = [[200, 300], [420, 280], [600, 300]]
+    STAR_LOCATION5 = [[400, 100], [200, 300], [600, 300]]
+    STAR_LOCATION6 = [[265, 365], [452, 114], [538, 325]]
+    STAR_LOCATION7 = [[100, 300], [100, 400], [100, 500]]
 
     def __init__(self, world, x, y):
         self.world = world
@@ -45,10 +55,20 @@ class StageObject:
         self.stage_name = "STAGE 00"
         self.status = ""
         self.desc_status = ""
-        self.tutorial_text = "Go 2 ExitGate → "
+        self.tutorial_text = "Go 2 XitGate → "
+        self.all_collect_stars = 0
+        self.stage_stars = 0
         self.stage_count = 0
+        self.object_move_trigger = False
         self.next_stage_status = False
 
+    def make_stars(self, STAR_LOCATION):
+        for j in STAR_LOCATION:
+            self.star = arcade.Sprite("images/star.png")
+            self.star.center_x = j[0]
+            self.star.center_y = j[1]
+
+            self.world.star_list.append(self.star)
 
     def make_objects(self, LOCATION):
         for i in LOCATION:
@@ -58,23 +78,55 @@ class StageObject:
 
             self.world.object_list.append(self.stage)
 
+    # def move_objects(self, LOCATION):
+    #     count=1
+    #     for i in LOCATION:
+    #         i.insert(int(count), i[1]+20)
+    #         i.clear()
+    #         count += 1
+    #         print(i)
+
+    def remove_stars(self, STAR_LOCATION):
+        for i in self.world.star_list:
+            self.world.star_list.remove(i)
+        self.make_stars(STAR_LOCATION)
+
     def update(self, delta):
-        if self.stage_count == 1:
+        if self.stage_count >= 1:
             self.tutorial_text = ""
         if self.world.character.restart == True:
+
+            if self.stage_count == 1:
+                self.remove_stars(self.STAR_LOCATION1)
+            elif self.stage_count == 2:
+                self.remove_stars(self.STAR_LOCATION2)
+            elif self.stage_count == 3:
+                self.remove_stars(self.STAR_LOCATION3)
+            elif self.stage_count == 4:
+                self.remove_stars(self.STAR_LOCATION4)
+            elif self.stage_count == 5:
+                self.remove_stars(self.STAR_LOCATION5)
+            elif self.stage_count == 6:
+                self.remove_stars(self.STAR_LOCATION6)
+            elif self.stage_count == 7:
+                self.remove_stars(self.STAR_LOCATION7)
+
             self.world.character.x = 30
             self.world.character.y = self.world.height // 2
             self.status = ""
             self.desc_status = ""
             self.world.character.hit = False
             self.world.character.restart = False
+
         elif self.next_stage_status == True:
             if self.stage_count < self.MAX_STAGE:
                 self.world.character.x = 30
                 self.world.character.y = self.world.height // 2
                 self.status = ""
                 self.desc_status = ""
+                self.stage_stars = 0
                 self.stage_count += 1
+                self.all_collect_stars += self.stage_stars
                 self.stage_name = "STAGE 0" + str(self.stage_count)
                 self.world.character.exit_hit = False
                 self.next_stage_status = False
@@ -82,28 +134,37 @@ class StageObject:
                 # stage1 objects
                 if self.stage_count == 1:
                     self.make_objects(self.LOCATION1)
+                    self.make_stars(self.STAR_LOCATION1)
 
                 # stage2 objects
                 if self.stage_count == 2:
                     self.make_objects(self.LOCATION2)
+                    self.make_stars(self.STAR_LOCATION2)
 
                 # stage3 objects
                 if self.stage_count == 3:
                     self.make_objects(self.LOCATION3)
+                    self.make_stars(self.STAR_LOCATION3)
 
                 # stage4 objects
                 if self.stage_count == 4:
                     self.make_objects(self.LOCATION4)
+                    self.make_stars(self.STAR_LOCATION4)
 
                 # stage5 objects
                 if self.stage_count == 5:
                     self.make_objects(self.LOCATION5)
+                    self.make_stars(self.STAR_LOCATION5)
 
                 # stage6 objects
                 if self.stage_count == 6:
                     self.make_objects(self.LOCATION6)
+                    self.make_stars(self.STAR_LOCATION6)
 
-
+                # # stage7 objects
+                # if self.stage_count == 7:
+                #     self.make_objects(self.LOCATION7)
+                #     self.make_stars(self.STAR_LOCATION7)
 
 class ExitObjects:
     def __init__(self, world, x, y):
@@ -121,6 +182,7 @@ class Character:
 
         self.hit = False
         self.exit_hit = False
+        self.star_hit = False
         self.restart = False
         self.animation = 1
 
@@ -134,6 +196,10 @@ class Character:
             self.x = 20
         if self.y <= 20:
             self.y = 20
+
+        if self.star_hit == True:
+            self.world.stage_objects.stage_stars += 1
+            self.star_hit = False
 
         if self.hit == True:
             self.x += 0
@@ -175,7 +241,15 @@ class Character:
 
         elif self.exit_hit == True:
             if self.world.stage_objects.stage_count < self.world.stage_objects.MAX_STAGE:
-                self.world.stage_objects.status = "Stage Clear"
+                if self.world.stage_objects.stage_stars == 1:
+                    self.world.stage_objects.status = "  Not Bad"
+                elif self.world.stage_objects.stage_stars == 2:
+                    self.world.stage_objects.status = "  GREAT :)"
+                elif self.world.stage_objects.stage_stars == 3:
+                    self.world.stage_objects.status = "PERFECT *0*"
+                else:
+                    self.world.stage_objects.status = "Stage Clear"
+
                 self.world.stage_objects.desc_status = "Press -ENTER- for go next !!"
             else:
                 self.world.stage_objects.status = "Game Clear"
@@ -191,34 +265,43 @@ class World:
         self.character = Character(self, 30, height // 2)
 
         self.object_list = arcade.SpriteList()
+        self.star_list = arcade.SpriteList()
 
         self.stage_objects = StageObject(self, width // 2 , height // 2)
 
         self.exit_gate = ExitObjects(self, width-10, height // 2)
 
 
-
-
-
-
     def update(self, delta):
         self.stage_objects.update(delta)
         self.character.update(delta)
 
+        # if self.stage_objects.stage_count == 7:
+        #     self.stage_objects.move_objects(self.stage_objects.LOCATION7)
+        #     self.stage_objects.make_objects(self.stage_objects.LOCATION7)
 
         for i in self.object_list:
             if self.character.is_hit(i, 40, 60):
                 self.character.hit = True
 
-        if self.character.is_exithit(self.exit_gate, 30, 30):
+        for j in self.star_list:
+            if self.character.is_hit(j, 30, 30):
+                self.character.star_hit = True
+                self.star_list.remove(j)
+
+
+        if self.character.is_exithit(self.exit_gate, 35, 35):
             self.character.exit_hit = True
             for i in self.object_list:
                 self.object_list.remove(i)
+            for j in self.star_list:
+                self.star_list.remove(j)
 
 
     def on_key_press(self, key, key_modifiers):
         if key == arcade.key.SPACE and self.character.hit == True:
             self.character.restart = True
+            self.stage_objects.stage_stars = 0
 
         if key == arcade.key.ENTER and self.character.exit_hit == True:
             self.stage_objects.next_stage_status = True
@@ -241,5 +324,3 @@ class World:
 
     def on_key_release(self, key, key_modifiers):
         self.character.direction = DIR_STILL
-
-
