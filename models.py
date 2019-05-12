@@ -7,7 +7,7 @@ DIR_UP = 1
 DIR_RIGHT = 2
 DIR_DOWN = 3
 DIR_LEFT = 4
-MOVEMENT_SPEED = 8
+MOVEMENT_SPEED = 10
 
 DIR_OFFSETS = {DIR_STILL: (0, 0),
                DIR_UP: (0, 1),
@@ -42,7 +42,7 @@ class StageObject:
     STAR_LOCATION1 = [[400, 100], [200, 300], [600, 300]]
     STAR_LOCATION2 = [[304, 360], [409, 240], [600, 300]]
     STAR_LOCATION3 = [[264, 272], [420, 240], [578, 197]]
-    STAR_LOCATION4 = [[200, 300], [420, 280], [600, 300]]
+    STAR_LOCATION4 = [[200, 300], [450, 280], [600, 300]]
     STAR_LOCATION5 = [[400, 100], [200, 300], [600, 300]]
     STAR_LOCATION6 = [[265, 365], [452, 114], [538, 325]]
     STAR_LOCATION7 = [[100, 300], [100, 400], [100, 500]]
@@ -53,11 +53,10 @@ class StageObject:
         self.y = y
 
         self.stage_name = "STAGE 00"
-        self.status = ""
-        self.desc_status = ""
+        self.status = " "
+        self.desc_status = " "
         self.tutorial_text = "Go 2 XitGate → "
         self.all_collect_stars = 0
-        self.stage_stars = 0
         self.stage_count = 0
         self.object_move_trigger = False
         self.next_stage_status = False
@@ -88,12 +87,13 @@ class StageObject:
 
     def remove_stars(self, STAR_LOCATION):
         for i in self.world.star_list:
-            self.world.star_list.remove(i)
+            i.remove_from_sprite_lists()
+
         self.make_stars(STAR_LOCATION)
 
     def update(self, delta):
         if self.stage_count >= 1:
-            self.tutorial_text = ""
+            self.tutorial_text = " "
         if self.world.character.restart == True:
 
             if self.stage_count == 1:
@@ -108,13 +108,13 @@ class StageObject:
                 self.remove_stars(self.STAR_LOCATION5)
             elif self.stage_count == 6:
                 self.remove_stars(self.STAR_LOCATION6)
-            elif self.stage_count == 7:
-                self.remove_stars(self.STAR_LOCATION7)
+            # elif self.stage_count == 7:
+            #     self.remove_stars(self.STAR_LOCATION7)
 
             self.world.character.x = 30
             self.world.character.y = self.world.height // 2
-            self.status = ""
-            self.desc_status = ""
+            self.status = " "
+            self.desc_status = " "
             self.world.character.hit = False
             self.world.character.restart = False
 
@@ -122,11 +122,10 @@ class StageObject:
             if self.stage_count < self.MAX_STAGE:
                 self.world.character.x = 30
                 self.world.character.y = self.world.height // 2
-                self.status = ""
-                self.desc_status = ""
-                self.stage_stars = 0
+                self.status = " "
+                self.desc_status = " "
                 self.stage_count += 1
-                self.all_collect_stars += self.stage_stars
+                self.all_collect_stars += 3 - len(self.world.star_list)
                 self.stage_name = "STAGE 0" + str(self.stage_count)
                 self.world.character.exit_hit = False
                 self.next_stage_status = False
@@ -182,7 +181,6 @@ class Character:
 
         self.hit = False
         self.exit_hit = False
-        self.star_hit = False
         self.restart = False
         self.animation = 1
 
@@ -197,10 +195,6 @@ class Character:
         if self.y <= 20:
             self.y = 20
 
-        if self.star_hit == True:
-            self.world.stage_objects.stage_stars += 1
-            self.star_hit = False
-
         if self.hit == True:
             self.x += 0
             self.y += 0
@@ -214,18 +208,19 @@ class Character:
 
 
     def is_hit(self, objects, hit_x, hit_y):
-        if objects.center_x - hit_x <= self.x <= objects.center_x + hit_x:
-            if objects.center_y - hit_y <= self.y  <= objects.center_y + hit_y:
-                if self.world.stage_objects.stage_count == 5 \
-                        and objects.center_x - hit_x <= 335 <= objects.center_x + hit_x \
-                        and objects.center_y - hit_y <= 600  <= objects.center_y + hit_y:
-                    return False
-                elif self.world.stage_objects.stage_count == 5 \
-                        and objects.center_x - hit_x <= 604 <= objects.center_x + hit_x \
-                        and objects.center_y - hit_y <= 600 <= objects.center_y + hit_y:
-                    return False
-                else:
-                    return True
+        # if self.world.hit_delay == False:
+            if objects.center_x - hit_x <= self.x <= objects.center_x + hit_x:
+                if objects.center_y - hit_y <= self.y  <= objects.center_y + hit_y:
+                    if self.world.stage_objects.stage_count == 5 \
+                            and objects.center_x - hit_x <= 335 <= objects.center_x + hit_x \
+                            and objects.center_y - hit_y <= 600  <= objects.center_y + hit_y:
+                        return False
+                    elif self.world.stage_objects.stage_count == 5 \
+                            and objects.center_x - hit_x <= 604 <= objects.center_x + hit_x \
+                            and objects.center_y - hit_y <= 600 <= objects.center_y + hit_y:
+                        return False
+                    else:
+                        return True
 
     def is_exithit(self, objects, hit_x, hit_y):
         if objects.x - hit_x <= self.x <= objects.x + hit_x:
@@ -241,11 +236,11 @@ class Character:
 
         elif self.exit_hit == True:
             if self.world.stage_objects.stage_count < self.world.stage_objects.MAX_STAGE:
-                if self.world.stage_objects.stage_stars == 1:
+                if len(self.world.star_list) == 2:
                     self.world.stage_objects.status = "  Not Bad"
-                elif self.world.stage_objects.stage_stars == 2:
+                elif len(self.world.star_list) == 1:
                     self.world.stage_objects.status = "  GREAT :)"
-                elif self.world.stage_objects.stage_stars == 3:
+                elif len(self.world.star_list) == 0:
                     self.world.stage_objects.status = "PERFECT *0*"
                 else:
                     self.world.stage_objects.status = "Stage Clear"
@@ -261,6 +256,8 @@ class World:
 
         self.width = width
         self.height = height
+        self.hit_delay = False
+        self.count_delay = 0
 
         self.character = Character(self, 30, height // 2)
 
@@ -270,7 +267,6 @@ class World:
         self.stage_objects = StageObject(self, width // 2 , height // 2)
 
         self.exit_gate = ExitObjects(self, width-10, height // 2)
-
 
     def update(self, delta):
         self.stage_objects.update(delta)
@@ -286,8 +282,8 @@ class World:
 
         for j in self.star_list:
             if self.character.is_hit(j, 30, 30):
-                self.character.star_hit = True
-                self.star_list.remove(j)
+                j.remove_from_sprite_lists()
+                j.update()
 
 
         if self.character.is_exithit(self.exit_gate, 35, 35):
@@ -301,7 +297,6 @@ class World:
     def on_key_press(self, key, key_modifiers):
         if key == arcade.key.SPACE and self.character.hit == True:
             self.character.restart = True
-            self.stage_objects.stage_stars = 0
 
         if key == arcade.key.ENTER and self.character.exit_hit == True:
             self.stage_objects.next_stage_status = True
