@@ -21,6 +21,7 @@ class ModelSprite(arcade.Sprite):
 
 class FieldWindow(arcade.Window):
     GAME_MODE = 0
+    H2P = 1
     def __init__(self, width, height):
         super().__init__(width, height, "・2　DotThrough")
 
@@ -43,11 +44,13 @@ class FieldWindow(arcade.Window):
 
 
     def on_key_press(self, key, key_modifiers):
-        if self.GAME_MODE == 1:
+        if key == arcade.key.ENTER and self.GAME_MODE == 1:
+            self.H2P += 1
+        if self.GAME_MODE == 2:
             self.world.on_key_press(key, key_modifiers)
 
     def on_key_release(self, key, key_modifiers):
-        if self.GAME_MODE == 1:
+        if self.GAME_MODE == 2:
             self.world.on_key_release(key, key_modifiers)
 
     def on_mouse_press(self, x:float, y:float, button, key_modifiers):
@@ -86,8 +89,30 @@ class FieldWindow(arcade.Window):
 
             self.start_button.draw()
 
-
         elif self.GAME_MODE == 1:
+            if self.H2P == 1:
+                arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
+                                            SCREEN_HEIGHT // 2,
+                                            SCREEN_WIDTH,
+                                            SCREEN_HEIGHT,
+                                            arcade.load_texture("images/H2P1.png"))
+            elif self.H2P == 2:
+                arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
+                                              SCREEN_HEIGHT // 2,
+                                              SCREEN_WIDTH,
+                                              SCREEN_HEIGHT,
+                                              arcade.load_texture("images/H2P2.png"))
+            elif self.H2P == 3:
+                arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
+                                              SCREEN_HEIGHT // 2,
+                                              SCREEN_WIDTH,
+                                              SCREEN_HEIGHT,
+                                              arcade.load_texture("images/H2P3.png"))
+            elif self.H2P == 4:
+                self.H2P = 1
+                self.GAME_MODE = 2
+
+        elif self.GAME_MODE == 2:
             arcade.set_background_color(arcade.color.BLACK_OLIVE)
             self.character_sprite.draw()
             self.object_cant_touch_stage_sprite.draw()
