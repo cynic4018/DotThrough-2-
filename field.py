@@ -31,8 +31,6 @@ class FieldWindow(arcade.Window):
         self.color_map_in_stage = arcade.color.ORANGE_RED
         self.color_map_not_in_stage = arcade.color.LIGHT_GRAY
 
-        self.object_cant_touch_stage_sprite = self.world.object_list
-
         self.star_sprite = self.world.star_list
 
         self.exit_gate_sprite = ModelSprite('images/Exit_gate.png',
@@ -45,17 +43,20 @@ class FieldWindow(arcade.Window):
 
 
     def on_key_press(self, key, key_modifiers):
-        self.world.on_key_press(key, key_modifiers)
+        if self.GAME_MODE == 1:
+            self.world.on_key_press(key, key_modifiers)
 
     def on_key_release(self, key, key_modifiers):
-        self.world.on_key_release(key, key_modifiers)
+        if self.GAME_MODE == 1:
+            self.world.on_key_release(key, key_modifiers)
 
     def on_mouse_press(self, x:float, y:float, button, key_modifiers):
-        if button == arcade.MOUSE_BUTTON_LEFT:
-            if self.start_button.center_y - 25 <= y <= self.start_button.center_y + 25\
-                and self.start_button.center_x - 85 <= x <= self.start_button.center_x + 85:
+        if self.GAME_MODE == 0:
+            if button == arcade.MOUSE_BUTTON_LEFT:
+                if self.start_button.center_y - 25 <= y <= self.start_button.center_y + 25\
+                    and self.start_button.center_x - 85 <= x <= self.start_button.center_x + 85:
 
-                self.GAME_MODE = 1
+                    self.GAME_MODE = 1
 
 
     def update(self, delta):
@@ -69,6 +70,8 @@ class FieldWindow(arcade.Window):
                                             if self.world.character.animation == 3
                                             else 'images/character4.png',
                                             model=self.world.character)
+
+        self.object_cant_touch_stage_sprite = self.world.object_list
 
 
     def on_draw(self):
@@ -180,7 +183,8 @@ class FieldWindow(arcade.Window):
                                             20,
                                             20,
                                             arcade.color.GOLDEN_POPPY
-                                            if len(self.world.star_list) <= 2
+                                            if len(self.world.star_list) <= 2 \
+                                               and self.world.character.keep_star == True
                                             else arcade.color.EERIE_BLACK,
                                             tilt_angle = 45)
 
@@ -189,7 +193,8 @@ class FieldWindow(arcade.Window):
                                             20,
                                             20,
                                             arcade.color.YELLOW_ORANGE
-                                            if len(self.world.star_list) <= 1
+                                            if len(self.world.star_list) <= 1 \
+                                               and self.world.character.keep_star == True
                                             else arcade.color.EERIE_BLACK,
                                             tilt_angle=45)
 
@@ -198,7 +203,8 @@ class FieldWindow(arcade.Window):
                                             20,
                                             20,
                                             arcade.color.ORANGE
-                                            if len(self.world.star_list) == 0
+                                            if len(self.world.star_list) == 0 \
+                                               and self.world.character.keep_star == True
                                             else arcade.color.EERIE_BLACK,
                                             tilt_angle=45)
 
