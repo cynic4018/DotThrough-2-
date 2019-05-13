@@ -110,8 +110,6 @@ class StageObject:
     def update(self, delta):
         self.DELAY_MOVE += 1
 
-        print(self.DELAY_MOVE)
-
         if self.stage_count >= 1:
             self.tutorial_text = " "
         if self.world.character.restart == True:

@@ -7,8 +7,27 @@ This arcade-game is about to clear each stage to go to the next stage. In the st
 ![dot2ProsCon](https://user-images.githubusercontent.com/32285642/54703051-ab0ec800-4b6a-11e9-97ea-a2070ff4a5fd.PNG)
 
 ## *Requirement*
-- arcade ver. 1.3.7 or more
-- python3
+- python ver. 3.7 or more [Download](https://www.python.org/downloads/)
+- arcade ver. 1.3.7 or more 
+
+## *How 2 Install*
+1.Clone this project repository. Then, go to your workspace and clone the project.
+<pre>
+$ cd your_workspace
+$(your_workspace) git clone https://github.com/cynic4018/DotThrough-2-.git
+</pre>
+
+2.If you don't have arcade library, you can install by:
+<pre>$ pip install arcade</pre>
+
+3.Go to project directory that you already clone the project and run field.py
+<pre>
+$(your_workspace) cd DotThrough-2-
+$(DotThrough-2-) python field.py
+</pre>
+
+## *Control*
+![Control](https://user-images.githubusercontent.com/32285642/57633649-03dc6900-75ce-11e9-86ef-60841185eb62.png)
 
 ## *How 2 Play*
 ![How2Play1](https://user-images.githubusercontent.com/32285642/57585303-a0d8cc80-7510-11e9-85c3-0b5f9edf8712.png)

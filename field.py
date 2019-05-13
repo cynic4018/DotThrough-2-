@@ -95,20 +95,26 @@ class FieldWindow(arcade.Window):
                                             SCREEN_HEIGHT // 2,
                                             SCREEN_WIDTH,
                                             SCREEN_HEIGHT,
-                                            arcade.load_texture("images/H2P1.png"))
+                                            arcade.load_texture("images/ControlG.png"))
             elif self.H2P == 2:
                 arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
                                               SCREEN_HEIGHT // 2,
                                               SCREEN_WIDTH,
                                               SCREEN_HEIGHT,
-                                              arcade.load_texture("images/H2P2.png"))
+                                              arcade.load_texture("images/H2P1.png"))
             elif self.H2P == 3:
                 arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
                                               SCREEN_HEIGHT // 2,
                                               SCREEN_WIDTH,
                                               SCREEN_HEIGHT,
-                                              arcade.load_texture("images/H2P3.png"))
+                                              arcade.load_texture("images/H2P2.png"))
             elif self.H2P == 4:
+                arcade.draw_texture_rectangle(SCREEN_WIDTH // 2,
+                                              SCREEN_HEIGHT // 2,
+                                              SCREEN_WIDTH,
+                                              SCREEN_HEIGHT,
+                                              arcade.load_texture("images/H2P3.png"))
+            elif self.H2P == 5:
                 self.H2P = 1
                 self.GAME_MODE = 2
 
